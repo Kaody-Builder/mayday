@@ -2,7 +2,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import { Intervention } from "./Intervention";
 
 @Index("Rapport_pkey", ["idRap"], { unique: true })
-@Entity("Rapport", { schema: "covid_tracker" })
+@Entity("Rapport")
 export class Rapport {
   @Column("integer", { primary: true, name: "id_rap" })
   idRap: number;

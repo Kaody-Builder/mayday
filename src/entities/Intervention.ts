@@ -11,7 +11,7 @@ import { Signalement } from "./Signalement";
 import { Rapport } from "./Rapport";
 
 @Index("Intervention_pkey", ["idInt"], { unique: true })
-@Entity("Intervention", { schema: "covid_tracker" })
+@Entity("Intervention")
 export class Intervention {
   @Column("integer", { primary: true, name: "id_int" })
   idInt: number;

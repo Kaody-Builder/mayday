@@ -10,7 +10,7 @@ import { Central } from "./Central";
 import { Intervention } from "./Intervention";
 
 @Index("Equipe_pkey", ["idEq"], { unique: true })
-@Entity("Equipe", { schema: "covid_tracker" })
+@Entity("Equipe")
 export class Equipe {
   @Column("integer", { primary: true, name: "id_eq" })
   idEq: number;
