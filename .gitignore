@@ -1,0 +1,10 @@
+.idea/
+.vscode/
+.env
+node_modules/
+tmp/
+temp/
+db/
+build/
+*.sql
+*.txt
