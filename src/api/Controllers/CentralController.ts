@@ -17,11 +17,11 @@ export default class CentralController extends Controller {
     async createConnectionAndAssignRepository(): Promise<void> {
         try {
             var connection: Connection = await createConnection(ormconfig)
-            this.centralRepository = connection.getRepository(Central)    
+            this.centralRepository = connection.getRepository(Central)
         } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     async addPost(router: Router): Promise<void> {
@@ -36,6 +36,7 @@ export default class CentralController extends Controller {
         await this.getAllCentral(router)
         await this.getSingleCentral(router)
     }
+
 
     async addPut(router: Router): Promise<void> {
         await this.editCentral(router);
@@ -79,28 +80,19 @@ export default class CentralController extends Controller {
         return central !== undefined
     }
 
-    
-
     async postCentral(router: Router) {
         router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             try {
-                    var centralToSave: Central = await this.createCentralFromRequest(req)
-                    var centralSaved: Central = await this.saveCentralToDatabase(centralToSave)
-                    if (await this.isCentralSaved(centralSaved))
-                        await this.sendResponse(res, 201, { message: "Central Added Successfully" })
-                    else
-                        await this.sendResponse(res, 403, { message: "Central Not Added" })
-                next()
-            } catch (err) {
-                await this.passErrorToExpress(err, next)
+                var centralToSave: Central = await this.createCentralFromRequest(req)
+                var centralSaved: Central = await this.saveCentralToDatabase(centralToSave)
+                await this.sendResponse(res, 201, { message: "Central Added Successfully" })
+            } catch (error) {
+
+                await this.sendResponse(res, 403, { message: "Central Not Added", error: error })
             }
+            next()
         })
     }
-
-    private async isCentralSaved(central: Central): Promise<boolean> {
-        return central !== undefined
-    }
-
     private async createCentralFromRequest(req: Request): Promise<Central> {
         return this.centralRepository.create(req.body as Object)
     }
@@ -108,39 +100,35 @@ export default class CentralController extends Controller {
         return await this.centralRepository.save(central);
     }
 
-
-    
-    private async deleteById(router: Router): Promise<void>{
+    private async deleteById(router: Router): Promise<void> {
         router.delete("/:idCentral", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var central: Central = await this.centralRepository.findOne(req.params.idCentral)
                 await this.centralRepository.remove(central)
-                res.status(204).json({ message: "deleted successfully" });
+                await this.sendResponse(res, 200, { message: "Central delete succesfully"});
             }
-            catch (err) {
-                this.passErrorToExpress(err, next);
+            catch (error) {
+                await this.sendResponse(res, 403, { message: "Central Not deleted", error: error });
             }
         });
     }
 
-
-
     private async editCentral(router: Router) {
         router.put("/:id", async (req, res, next) => {
             try {
-                var centralToModify: Central = await this.fetchCentralFromDatabase(req.params.id);
-                if (this.isCentralExist(centralToModify)) {
-                    var centralModifiedReadyToSave: Central = await this.mergeCentralFromRequest(centralToModify, req);
-                    var centralModified: Central = await this.updateCentralInDatabase(centralModifiedReadyToSave);
-                    if (await this.isCentralExist(centralModified))
-                        await this.sendResponse(res, 204, { message: "Central Modified Successfully" });
-                    else
-                        await this.sendResponse(res, 403, { message: "Central Not Modified" });
-                }
-                else {
+                try {
+                    var centralToModify: Central = await this.centralRepository.findOneOrFail(req.params.id)
+                } catch (error) {
                     await this.sendResponse(res, 404, { message: "Central Not Found" });
+                    return
                 }
-                next();
+                try {
+                    var centralModifiedReadyToSave: Central = await this.mergeCentralFromRequest(centralToModify, req);
+                    await this.updateCentralInDatabase(centralModifiedReadyToSave);
+                    await this.sendResponse(res, 200, { message: "Central Modified Successfully" });
+                } catch (error) {
+                    await this.sendResponse(res, 403, { message: "Central Not Modified", error: error });
+                }
             }
             catch (err) {
                 this.passErrorToExpress(err, next);
