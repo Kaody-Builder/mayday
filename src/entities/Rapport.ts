@@ -10,11 +10,8 @@ export class Rapport {
     })
     idRap: number;
 
-  @Column("date", { name: "date_rap" })
+  @Column("timestamptz", { name: "date_rap" })
   dateRap: string;
-
-  @Column("time without time zone", { name: "heure_rap" })
-  heureRap: string;
 
   @Column("integer", { name: "nb_tdr_rap" })
   nbTdrRap: number;

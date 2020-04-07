@@ -23,8 +23,8 @@ export class Intervention {
     @Column("timestamptz", { name: "date_int" })
     dateInt: Date;
 
-    @Column("integer", { name: "etat_int" })
-    etatInt: number;
+    @Column("boolean", { name: "etat_int" })
+    etatInt: boolean;
 
     @ManyToOne(() => Equipe, (equipe) => equipe.interventions)
     @JoinColumn([{ name: "id_eq", referencedColumnName: "idEq" }])

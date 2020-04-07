@@ -7,7 +7,7 @@ var connectionOption: ConnectionOptions = {
     username: process.env.DB_USER || "postgres",
     password: process.env.DB_PASSWORD || "toor11",
     database: process.env.DB_DATABASE || "KaodyBuilder",
-    schema: "covid_tracker",
+    schema: "public",
     synchronize: true,
     // dropSchema: true,
     entities: [

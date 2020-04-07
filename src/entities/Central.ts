@@ -1,5 +1,7 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Equipe } from "./Equipe";
+import { Pays } from './Pays';
+import { name } from "ejs";
 
 @Index("Central_pkey", ["idCent"], { unique: true })
 @Entity("Central")
@@ -10,9 +12,31 @@ export class Central {
     })
     idCent: number;
 
-    @Column("character varying", { name: "reg_cent", length: 255 })
-    regCent: string;
+    @Column({
+        type: 'geometry',
+        nullable: false,
+        spatialFeatureType: 'Point',
+        srid: 4326,
+        name: "coord_cent"
+    })
+    coordCent: string;
+
+    @Column('character varying',{
+        nullable: false,
+        length: "20",
+        name: "login_cent"
+    })
+    loginCent: string;
+
+    @Column({
+        type: 'text',
+        nullable: false,
+        name: "pass_cent"
+    })
+    passCent: string;
 
     @OneToMany(() => Equipe, (equipe) => equipe.idCent)
     equipes: Equipe[];
+    @ManyToOne(() => Pays, (pays) => pays.idPays)
+    pays:Pays
 }

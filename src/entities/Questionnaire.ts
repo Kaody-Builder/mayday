@@ -1,5 +1,6 @@
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Reponse } from "./Reponse";
+import { Option } from './Option';
 
 @Index("Questionnaire_pkey", ["idQuest"], { unique: true })
 @Entity("Questionnaire")
@@ -15,4 +16,6 @@ export class Questionnaire {
 
     @OneToMany(() => Reponse, (reponse) => reponse.idQuest)
     reponses: Reponse[];
+    @OneToMany(() => Option, (option) => option.idOp)
+    options: Option[];
 }
