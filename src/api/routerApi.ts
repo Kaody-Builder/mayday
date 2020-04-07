@@ -1,6 +1,13 @@
 import express, { Request, Response, NextFunction } from "express"
 import CentralController from './Controllers/CentralController';
 import EquipeController from './Controllers/EquipeController';
+import InterventionController from './Controllers/InterventionController';
+import SignalementController from './Controllers/SiggnalementlController';
+import ReponseController from './Controllers/ReponseController';
+import RapportController from './Controllers/RapportController';
+import QuestionnaireController from './Controllers/QuestionnaireController';
+import PaysController from './Controllers/PaysController';
+import OptionController from './Controllers/OptionController';
 var router = express.Router()
 router.use("*", (req: Request, res: Response, next: NextFunction) => {
     if (req.method != "POST" && req.method != "PUT") {
@@ -21,6 +28,15 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
     }
     next()
 })
+
 router.use("/centrals", new CentralController().mainRouter)
 router.use("/equipes", new EquipeController().mainRouter)
+router.use("/interventions", new InterventionController().mainRouter)
+router.use("/options", new OptionController().mainRouter)
+router.use("/pays", new PaysController().mainRouter)
+router.use("/questionnaires", new QuestionnaireController().mainRouter)
+router.use("/rapports", new RapportController().mainRouter)
+router.use("/reponses", new ReponseController().mainRouter)
+router.use("/signalements", new SignalementController().mainRouter)
+
 export default router;
