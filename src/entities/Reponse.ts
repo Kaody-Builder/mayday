@@ -1,13 +1,15 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Questionnaire } from "./Questionnaire";
 import { Signalement } from "./Signalement";
 
 @Index("Reponse_pkey", ["idRep"], { unique: true })
 @Entity("Reponse")
 export class Reponse {
-  @Column("integer", { primary: true, name: "id_rep" })
-  idRep: number;
-
+    @PrimaryGeneratedColumn({
+        type: "integer",
+        name: "id_rep"
+    })
+    idRep: number;
   @Column("character varying", { name: "valeur_rep", length: 10 })
   valeurRep: string;
 

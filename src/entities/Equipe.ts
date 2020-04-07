@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Central } from "./Central";
 import { Intervention } from "./Intervention";
@@ -12,8 +13,11 @@ import { Intervention } from "./Intervention";
 @Index("Equipe_pkey", ["idEq"], { unique: true })
 @Entity("Equipe")
 export class Equipe {
-  @Column("integer", { primary: true, name: "id_eq" })
-  idEq: number;
+    @PrimaryGeneratedColumn({
+        type: "integer",
+        name: "id_eq"
+    })
+    idEq: number;
 
   @Column("character varying", { name: "matricule_eq", length: 8 })
   matriculeEq: string;
