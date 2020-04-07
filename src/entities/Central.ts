@@ -1,7 +1,6 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne, ValueTransformer } from "typeorm";
 import { Equipe } from "./Equipe";
 import { Pays } from './Pays';
-import { name } from "ejs";
 
 @Index("Central_pkey", ["idCent"], { unique: true })
 @Entity("Central")
@@ -13,7 +12,7 @@ export class Central {
     idCent: number;
 
     @Column({
-        type: 'geometry',
+        type: 'geography',
         nullable: false,
         spatialFeatureType: 'Point',
         srid: 4326,

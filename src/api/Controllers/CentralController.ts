@@ -4,6 +4,9 @@ import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import router from '../routerApi';
 import { Central } from '../../entities/Central';
+import * as wkx from "wkx"
+
+
 
 export default class CentralController extends Controller {
 
@@ -16,8 +19,8 @@ export default class CentralController extends Controller {
     }
     async createConnectionAndAssignRepository(): Promise<void> {
         try {
-            var connection: Connection = await createConnection(ormconfig)
-            this.centralRepository = connection.getRepository(Central)
+             var connection: Connection = await createConnection(ormconfig)
+             this.centralRepository = connection.getRepository(Central)
         } catch (error) {
             console.log(error)
         }
@@ -47,7 +50,6 @@ export default class CentralController extends Controller {
             try {
                 var centrals: Central[] = await this.fetchCentralsFromDatabase()
                 await this.sendResponse(res, 200, { data: centrals })
-                next()
             } catch (err) {
                 await this.passErrorToExpress(err, next)
             }
@@ -67,7 +69,6 @@ export default class CentralController extends Controller {
                 } else {
                     await this.sendResponse(res, 404, { message: "Central Not Found" })
                 }
-                next()
             } catch (err) {
                 await this.passErrorToExpress(err, next)
             }

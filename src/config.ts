@@ -9,6 +9,7 @@ var connectionOption: ConnectionOptions = {
     database: process.env.DB_DATABASE || "KaodyBuilder",
     schema: "public",
     synchronize: true,
+    
     // dropSchema: true,
     entities: [
         "src/entities/**/*.ts"
