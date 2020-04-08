@@ -3,9 +3,21 @@ import { createConnection, DeleteResult, Repository, Connection, UpdateResult } 
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import { Signalement } from '../../entities/Signalement';
+import md5 from "crypto-js/md5"
+import fs from "fs"
+import multer from 'multer'
+import path from "path"
 
-
-
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/images')
+    },
+    filename: function (req, file, cb) {
+      cb(null, md5(file.fieldname + '-' + Date.now()).toString() + "." + file.originalname.split(".").pop())
+    }
+  })
+  
+var upload = multer({ storage: storage })
 
 export default class SignalementController extends Controller {
 
@@ -48,7 +60,7 @@ export default class SignalementController extends Controller {
         router.get("/", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var signalements: Signalement[] = await this.fetchSignalementsFromDatabase()
-                await this.sendResponse(res, 200, { data: signalements })
+                await this.sendResponse(res, 200, { data: signalements})
             } catch (err) {
                 await this.passErrorToExpress(err, next)
             }
@@ -81,11 +93,12 @@ export default class SignalementController extends Controller {
     }
 
     async postSignalement(router: Router) {
-        router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+        router.post("/", upload.single('photo'),async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var signalementToSave: Signalement = await this.createSignalementFromRequest(req)
+                signalementToSave.photoSign = "images/" + req.file.filename
                 var signalementSaved: Signalement = await this.saveSignalementToDatabase(signalementToSave)
-                await this.sendResponse(res, 201, { message: "Signalement Added Successfully" })
+                await this.sendResponse(res, 201, { message: "Signalement Added Successfully"})
             } catch (error) {
 
                 await this.sendResponse(res, 403, { message: "Signalement Not Added", error: error })
@@ -104,8 +117,13 @@ export default class SignalementController extends Controller {
         router.delete("/:idSignalement", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var signalement: Signalement = await this.signalementRepository.findOne(req.params.idSignalement)
+                var pathPhoto = signalement.photoSign
                 await this.signalementRepository.remove(signalement)
                 await this.sendResponse(res, 200, { message: "Signalement delete succesfully"});
+                fs.unlink(path.dirname(require.main.filename).replace("src", "") + "/uploads/" + pathPhoto, function (err) {
+                    if (err) throw err;
+                    console.log('File deleted!');
+                });
             }
             catch (error) {
                 await this.sendResponse(res, 403, { message: "Signalement Not deleted", error: error });
