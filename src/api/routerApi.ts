@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express"
 import CentralController from './Controllers/CentralController';
 import EquipeController from './Controllers/EquipeController';
 import InterventionController from './Controllers/InterventionController';
-import SignalementController from './Controllers/SiggnalementlController';
+import SignalementController from './Controllers/SignalementlController';
 import ReponseController from './Controllers/ReponseController';
 import RapportController from './Controllers/RapportController';
 import QuestionnaireController from './Controllers/QuestionnaireController';

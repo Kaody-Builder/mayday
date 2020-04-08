@@ -2,9 +2,8 @@ import { Router, Response, Request, NextFunction, ErrorRequestHandler } from "ex
 import { createConnection, DeleteResult, Repository, Connection, UpdateResult } from "typeorm";
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
-import router from '../routerApi';
 import { Signalement } from '../../entities/Signalement';
-import * as wkx from "wkx"
+
 
 
 
