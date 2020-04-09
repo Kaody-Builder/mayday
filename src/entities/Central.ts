@@ -1,6 +1,7 @@
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne, ValueTransformer } from "typeorm";
 import { Equipe } from "./Equipe";
 import { Pays } from './Pays';
+import { Attente } from './Attente';
 
 @Index("Central_pkey", ["idCent"], { unique: true })
 @Entity("Central")
@@ -36,6 +37,10 @@ export class Central {
 
     @OneToMany(() => Equipe, (equipe) => equipe.idCent)
     equipes: Equipe[];
+
+    @OneToMany(() => Attente, (attente) => attente.numTel)
+    attentes: Attente[];
+    
     @ManyToOne(() => Pays, (pays) => pays.idPays)
     pays:Pays
 }

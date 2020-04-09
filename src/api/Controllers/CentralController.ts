@@ -56,6 +56,40 @@ export default class CentralController extends Controller {
         })
     }
 
+    private async getAllAttente(router: Router): Promise<void> {
+        router.get("/:idCent/attente", async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                var attentes: Attente[] = await this.fetchAttentesFromDatabase()
+                await this.sendResponse(res, 200, { data: attentes })
+            } catch (err) {
+                await this.passErrorToExpress(err, next)
+            }
+        })
+    }
+
+    private async fetchAttentesFromDatabase(): Promise<Attente[]> {
+        return await this.attenteRepository.find()
+    }
+
+    private async getSingleAttente(router: Router) {
+        router.get("/:idCent/attente/:numTel", async (req, res, next) => {
+            try {
+                var attente: Attente = await this.fetchAttenteFromDatabase(req.params.id)
+                if (await this.isAttenteExist(attente)) {
+                    await this.sendResponse(res, 200, { data: attente })
+                } else {
+                    await this.sendResponse(res, 404, { message: "Attente Not Found" })
+                }
+            } catch (err) {
+                await this.passErrorToExpress(err, next)
+            }
+        })
+    }
+    private async fetchAttenteFromDatabase(id: string): Promise<Attente> {
+        return this.attenteRepository.findOne(id)
+    }
+
+
     private async fetchCentralsFromDatabase(): Promise<Central[]> {
         return await this.centralRepository.find()
     }

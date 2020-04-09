@@ -2,16 +2,18 @@ import express, { Request, Response, NextFunction } from "express"
 import CentralController from './Controllers/CentralController';
 import EquipeController from './Controllers/EquipeController';
 import InterventionController from './Controllers/InterventionController';
-import SignalementController from './Controllers/SignalementlController';
+import SignalementController from './Controllers/SignalementController';
 import ReponseController from './Controllers/ReponseController';
 import RapportController from './Controllers/RapportController';
 import QuestionnaireController from './Controllers/QuestionnaireController';
 import PaysController from './Controllers/PaysController';
 import OptionController from './Controllers/OptionController';
+import AttenteController from './Controllers/AttenteController';
 var router = express.Router()
 router.use("*", convertLatLong())
 
 router.use("/centrals", new CentralController().mainRouter)
+router.use("/attentes", new AttenteController().mainRouter)
 router.use("/equipes", new EquipeController().mainRouter)
 router.use("/interventions", new InterventionController().mainRouter)
 router.use("/options", new OptionController().mainRouter)
