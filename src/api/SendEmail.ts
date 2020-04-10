@@ -19,55 +19,25 @@ export default class Utils {
         let mailOptions = {
             to: email,
             subject: 'Code confirmation',
-            html: `<!DOCTYPE html>
-            <html lang="en">
-            
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Document</title>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-                <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-                <link href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" rel="stylesheet">
-                <style>
+            html: `    
+        <div style="display: flex; align-items: center; justify-content: center; text-align: center;">
 
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="row align-justify">
-                        <div class="col-md-12 col-lg-12 boxPanel">
-                            <div class="shadow  mb-3 bg-white rounded">
-                                <div class="card-body covpanel">
-                                    <div>
-                                    *{font-family: 'Open Sans', sans-serif;}h3{font-family: 'Product Sans', sans-serif;}.btn-info {background-color: #0AB099;font-size: 15px;border: none;border-radius: 0%;}.confirmation {width: 20%;height: 30%;}.comment {color: gray;font-size: 12px;}.covpanel {width: 70%;}.boxPanel {}
-                                        <img src="${process.env.BASE_URL}/assets/logo1.png" alt="logo" width="12%">
-                                    </div><br>
-                                    <div>
-                                        <strong>
-                                            <h3>May<span style="color: #0AB099;">Day</span></h3>
-                                        </strong>
-                                        <p class="comment">Please confirm that your email address to confirm the distress.
-                                        </p><br>
-                                        <div class=" col-md-5 col-lg-6">
-                                        <a href="http://mayday-kaody.herokuapp.com/api/confirmations/${email}/${code}">
-                                                <div class="btn btn-info">Confirm Distress</div>
-                                            </a>
-                                        </div>
-                                    </div><br>
-                                    <div>
-                                        <p class="comment">You may also enter this confirmation code to continue: <span style="color: grey; font-size: 15px;"> ${code} </span> </p>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-            </body>
-            
-            </html>`
+        <div style="box-shadow: #f0f0f0 4px 2px 2px 1px; border: #f0f0f0 1px solid; height: 400px; width: 400px;">
+
+
+                <h1 style="font-size: xx-large;margin-top: 70px;">May<span style="color: #0AB099;">day</span></h1>
+                <p style="font-size: medium;margin-top: 55px;">Would you like to send an <b>emergency signal</b> ?  </p>
+                <a style="text-decoration: none !important;" href="http://mayday-kaody.herokuapp.com/api/confirmations/${email}/${code}">
+                    <button
+                    style="background-color: #0AB099;font-size: 15px;border: none;border-radius: 0%; color: white; font-weight: 700; padding: 7px; display: inline-block; margin-top: 10px; border-radius: 1px;margin-top: px;">
+                    Confirm emergency
+                </button>
+            </a>
+            <p style="font-size: small; margin-top: 35px;">If the button don't work enter this code : <b
+                style="font-size: medium;">123456</b></p>
+        </div>
+    </div>
+            `
         };
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
