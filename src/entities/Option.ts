@@ -9,9 +9,6 @@ export class Option {
     })
     idOpti: number;
 
-    @Column("bit", { name: "type_opti" })
-    typeOpti: number;
-
     @Column("character varying", { name: "valeur_opti", length: 50 })
     valeurOpti: string;
 

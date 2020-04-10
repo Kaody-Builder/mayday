@@ -3,21 +3,7 @@ import { createConnection, DeleteResult, Repository, Connection, UpdateResult } 
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import { Distress } from '../../entities/Distress';
-import md5 from "crypto-js/md5"
-import fs from "fs"
-import multer from 'multer'
-import path from "path"
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/images')
-    },
-    filename: function (req, file, cb) {
-      cb(null, md5(file.fieldname + '-' + Date.now()).toString() + "." + file.originalname.split(".").pop())
-    }
-  })
-  
-var upload = multer({ storage: storage })
+import Utils from '../SendEmail';
 
 export default class DistressController extends Controller {
 
@@ -93,10 +79,12 @@ export default class DistressController extends Controller {
     }
 
     async postDistress(router: Router) {
-        router.post("/", upload.single('photo'),async (req: Request, res: Response, next: NextFunction) => {
+        router.post("/",async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var distressToSave: Distress = await this.createDistressFromRequest(req)
+                distressToSave.codeDist = Math.floor(Math.random() * (9999999 - 100000) + 100000).toString()
                 var distressSaved: Distress = await this.saveDistressToDatabase(distressToSave)
+                Utils.sendEmail(distressToSave.idUser.mailUser,distressToSave.codeDist)
                 await this.sendResponse(res, 201, { message: "Distress Added Successfully"})
             } catch (error) {
 
@@ -116,13 +104,8 @@ export default class DistressController extends Controller {
         router.delete("/:idDistress", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var distress: Distress = await this.distressRepository.findOne(req.params.idDistress)
-                // var pathPhoto = distress.photoSign
                 await this.distressRepository.remove(distress)
                 await this.sendResponse(res, 200, { message: "Distress delete succesfully"});
-                // fs.unlink(path.dirname(require.main.filename).replace("src", "") + "/uploads/" + pathPhoto, function (err) {
-                //     if (err) throw err;
-                //     console.log('File deleted!');
-                // });
             }
             catch (error) {
                 await this.sendResponse(res, 403, { message: "Distress Not deleted", error: error });

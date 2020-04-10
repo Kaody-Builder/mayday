@@ -26,8 +26,11 @@ export class Distress {
     @Column("character varying", { nullable: true, name: "photo_dist" })
     photoDist: string;
 
-    @Column("bit", { nullable: true,  name: "niv_prio_dist" })
+    @Column("bit", { nullable: true,  name: "level_dist" })
     levelDist: number;
+
+    @Column("character varying", { nullable: false, length: 6, name: "code_dist" })
+    codeDist: string;
 
     @OneToMany(() => Intervention, (intervention) => intervention.idInte)
     interventions: Intervention[];

@@ -14,8 +14,11 @@ export class User {
     @Column("character varying", { nullable: false, length: 200, name: "fullname_user" })
     fullnameUser: string;
 
-    @Column("character varying", { nullable: false, length: 200, name: "phone_user" })
+    @Column("character varying", { nullable: false, length: 20, name: "phone_user" })
     phoneUser: string;
+
+    @Column("character varying", { nullable: false, length: 200, name: "mail_user" })
+    mailUser: string;
 
     @Column("character varying", { nullable: false, length: 250, name: "pass_user" })
     passUser: string;
