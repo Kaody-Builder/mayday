@@ -18,7 +18,7 @@ export class Reply {
   @JoinColumn([{ name: "id_ques", referencedColumnName: "idQues" }])
   idQues: Question;
 
-  @ManyToOne(() => Diagnostic, (diagnostic) => diagnostic.idDiag)
+  @ManyToOne(() => Diagnostic, (diagnostic) => diagnostic.idDiag, {nullable: true})
   @JoinColumn([{ name: "id_diag", referencedColumnName: "idDiag" }])
   idDiag: Diagnostic;
 }
