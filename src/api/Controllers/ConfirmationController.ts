@@ -50,8 +50,8 @@ export default class ConfirmationController extends Controller {
         })
         router.post("/:email/send", async (req: Request, res: Response, next: NextFunction) => {
             try {
-                var u = await this.distressRepository.findOneOrFail({where: {emailUser: req.params.email}})
-                Utils.sendEmail(req.params.email, u.codeDist);
+                // var u = await this.distressRepository.findOneOrFail({where: {emailUser: req.params.email}})
+                Utils.sendEmail(req.params.email, "u.codeDist");
                 this.sendResponse(res, 201, { message: "Confirmation Successfully" })
             } catch (error) {
                 await this.sendResponse(res, 403, { message: "Error", error: error })

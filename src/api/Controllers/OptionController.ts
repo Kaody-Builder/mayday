@@ -1,9 +1,10 @@
 import { Router, Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import { createConnection, DeleteResult, Repository, Connection, UpdateResult } from "typeorm";
+import { createConnection, DeleteResult, Repository, Connection, UpdateResult, getConnection } from "typeorm";
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import router from '../routerApi';
 import { Option } from '../../entities/Option';
+import { Question } from '../../entities/Question';
 
 export default class OptionController extends Controller {
 
@@ -59,22 +60,18 @@ export default class OptionController extends Controller {
     }
 
     private async getSingleOption(router: Router) {
-        router.get("/:id", async (req, res, next) => {
+        router.get("/:idQuest", async (req, res, next) => {
             try {
-                var option: Option = await this.fetchOptionFromDatabase(req.params.id)
-                if (await this.isOptionExist(option)) {
+                var option: Option[] = await this.fetchOptionFromDatabase(req.params.idQuest)
                     await this.sendResponse(res, 200, { data: option })
-                } else {
-                    await this.sendResponse(res, 404, { message: "Option Not Found" })
-                }
                 next()
             } catch (err) {
                 await this.passErrorToExpress(err, next)
             }
         })
     }
-    private async fetchOptionFromDatabase(id: string): Promise<Option> {
-        return this.optionRepository.findOne(id)
+    private async fetchOptionFromDatabase(id: string): Promise<Option[]> {
+        return this.optionRepository.find({ where: {question: id} })
     }
     private async isOptionExist(option: Option): Promise<boolean> {
         return option !== undefined

@@ -1,4 +1,4 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, JoinColumn } from "typeorm";
 import { Reply } from "./Reply";
 import { Option } from './Option';
 
@@ -19,6 +19,7 @@ export class Question {
 
     @OneToMany(() => Reply, (reply) => reply.idRepl)
     replys: Reply[];
+
     @OneToMany(() => Option, (option) => option.idOpti)
     options: Option[];
 }
