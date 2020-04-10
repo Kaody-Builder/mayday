@@ -1,28 +1,24 @@
 import express, { Request, Response, NextFunction } from "express"
 import CentralController from './Controllers/CentralController';
-import EquipeController from './Controllers/EquipeController';
+import TeamController from './Controllers/TeamController';
 import InterventionController from './Controllers/InterventionController';
-import SignalementController from './Controllers/SignalementController';
-import ReponseController from './Controllers/ReponseController';
-import RapportController from './Controllers/RapportController';
-import QuestionnaireController from './Controllers/QuestionnaireController';
-import PaysController from './Controllers/PaysController';
+import DistressController from './Controllers/DistressController';
+import ReplyController from './Controllers/ReplyController';
+import ReportController from './Controllers/ReportController';
+import QuestionController from './Controllers/QuestionController';
 import OptionController from './Controllers/OptionController';
-import AttenteController from './Controllers/AttenteController';
 import SymptomeController from './Controllers/SymptomeController';
 var router = express.Router()
 router.use("*", convertLatLong())
 
 router.use("/centrals", new CentralController().mainRouter)
-router.use("/attentes", new AttenteController().mainRouter)
-router.use("/equipes", new EquipeController().mainRouter)
+router.use("/teams", new TeamController().mainRouter)
 router.use("/interventions", new InterventionController().mainRouter)
 router.use("/options", new OptionController().mainRouter)
-router.use("/pays", new PaysController().mainRouter)
-router.use("/questionnaires", new QuestionnaireController().mainRouter)
-router.use("/rapports", new RapportController().mainRouter)
-router.use("/reponses", new ReponseController().mainRouter)
-router.use("/signalements", new SignalementController().mainRouter)
+router.use("/questionnaires", new QuestionController().mainRouter)
+router.use("/reports", new ReportController().mainRouter)
+router.use("/replys", new ReplyController().mainRouter)
+router.use("/distresss", new DistressController().mainRouter)
 router.use("/symptomes", new SymptomeController().mainRouter)
 
 export default router;
