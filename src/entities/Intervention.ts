@@ -7,33 +7,30 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { Equipe } from "./Equipe";
-import { Signalement } from "./User";
-import { Rapport } from "./Rapport";
+import { Team } from "./Team";
+import { Report } from "./Report";
+import { Distress } from './Distress';
 
-@Index("Intervention_pkey", ["idInt"], { unique: true })
+@Index("Intervention_pkey", ["idInte"], { unique: true })
 @Entity("Intervention")
 export class Intervention {
     @PrimaryGeneratedColumn({
         type: "integer",
-        name: "id_int"
+        name: "id_inte"
     })
-    idInt: number;
+    idInte: number;
 
-    @Column("timestamptz", { name: "date_int" })
-    dateInt: Date;
+    @Column("timestamptz", { name: "date_inte" })
+    dateInte: Date;
 
-    @Column("boolean", { name: "etat_int" })
-    etatInt: boolean;
+    @ManyToOne(() => Team, (team) => team.interventions)
+    @JoinColumn([{ name: "id_team", referencedColumnName: "idTeam" }])
+    idTeam: Team;
 
-    @ManyToOne(() => Equipe, (equipe) => equipe.interventions)
-    @JoinColumn([{ name: "id_eq", referencedColumnName: "idEq" }])
-    idEq: Equipe;
+    @ManyToOne(() => Distress, (distress) => distress.idDist)
+    @JoinColumn([{ name: "id_dist", referencedColumnName: "idDist" }])
+    idDist: Distress;
 
-    @ManyToOne(() => Signalement, (signalement) => signalement.interventions)
-    @JoinColumn([{ name: "id_sign", referencedColumnName: "idSign" }])
-    idSign: Signalement;
-
-    @OneToMany(() => Rapport, (rapport) => rapport.idInt)
-    rapports: Rapport[];
+    @OneToMany(() => Report, (report) => report.idRepo)
+    reports: Report[];
 }

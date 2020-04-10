@@ -1,20 +1,20 @@
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { Questionnaire } from './Questionnaire';
+import { Question } from './Question';
 
 @Entity("Option")
 export class Option {
     @PrimaryGeneratedColumn({
         type: "integer",
-        name: "id_op"
+        name: "id_opti"
     })
-    idOp: number;
+    idOpti: number;
 
-    @Column("bit", { name: "type_op" })
-    typeOp: number;
+    @Column("bit", { name: "type_opti" })
+    typeOpti: number;
 
-    @Column("character varying", { name: "valeur_op", length: 10 })
-    valeurOp: string;
+    @Column("character varying", { name: "valeur_opti", length: 50 })
+    valeurOpti: string;
 
-    @ManyToOne(() => Questionnaire, (questionnaire) => questionnaire.idQuest)
-    questionnaire: Questionnaire;
+    @ManyToOne(() => Question, (question) => question.idQues)
+    question: Question;
 }
