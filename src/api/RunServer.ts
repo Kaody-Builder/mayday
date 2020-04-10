@@ -1,5 +1,5 @@
 import router from "./routerApi";
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from "body-parser"
 import compression from "compression"
 import { createConnection } from 'typeorm';
@@ -7,7 +7,7 @@ import { ormconfig } from '../config';
 import { Question } from '../entities/Question';
 import { getConnection } from 'typeorm';
 import cors from "cors"
-
+import * as path from "path"
 
 export default () => {
 
@@ -25,7 +25,10 @@ export default () => {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json())
     app.use("/api", compression())
-    app.use(express.static(__dirname.replace("/src/api", "") + '/uploads'))
+    app.use(express.static(__dirname.replace("/src/api", "") + '/angular/dist/covida'))
+    // app.get("/", async (req: Request, res: Response, next: NextFunction) => {
+    //     res.sendFile(path.join(__dirname.replace("/src/api", "") +'/dist/covida/index.html'));
+    // })
     app.use("/api", router)
     io.sockets.on('connection', function (socket) {
         socket.on('broadcast', function (message) {
