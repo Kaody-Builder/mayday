@@ -9,7 +9,7 @@ import { createConnection } from 'typeorm';
 import { ormconfig } from '../config';
 import { Question } from '../entities/Question';
 import { getConnection } from 'typeorm';
-
+import cors from "cors"
 
 
 export default() => {
@@ -19,6 +19,7 @@ export default() => {
         await getConnection().createEntityManager().query(sql)
     }})()
     const app = express();
+    app.use(cors())
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json())
     app.use("/api", compression())
