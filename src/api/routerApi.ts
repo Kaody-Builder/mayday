@@ -9,6 +9,7 @@ import QuestionController from './Controllers/QuestionController';
 import OptionController from './Controllers/OptionController';
 import SymptomeController from './Controllers/SymptomeController';
 import ConfirmationController from './Controllers/ConfirmationController';
+import DirectionController from './Controllers/DirectionController';
 var router = express.Router()
 router.use("*", convertLatLong())
 
@@ -22,6 +23,7 @@ router.use("/replys", new ReplyController().mainRouter)
 router.use("/distresss", new DistressController().mainRouter)
 router.use("/symptomes", new SymptomeController().mainRouter)
 router.use("/confirmations", new ConfirmationController().mainRouter)
+router.use("/directions", new DirectionController().mainRouter)
 
 export default router;
 
