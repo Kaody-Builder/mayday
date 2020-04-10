@@ -1,5 +1,5 @@
 import { Router, Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import { createConnection, DeleteResult, Repository, Connection, UpdateResult } from "typeorm";
+import { createConnection, DeleteResult, Repository, Connection, UpdateResult, getConnection } from "typeorm";
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import { Reply } from '../../entities/Reply';
@@ -82,11 +82,16 @@ export default class ReplyController extends Controller {
     async postReply(router: Router) {
         router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             try {
-                var replyToSave: Reply = await this.createReplyFromRequest(req)
-                var replySaved: Reply = await this.saveReplyToDatabase(replyToSave)
+                var data = JSON.parse(req.body.replies)
+                var queries = []
+                for(var json of data){
+                    queries.push(`('${json["value"]}', ${json["idQuest"]})`);
+                }
+
+                var query = `INSERT INTO public."Reply"(value_repl, id_ques) VALUES ${queries.join(", ")};`
+                await getConnection().createEntityManager().query(query)
                 await this.sendResponse(res, 201, { message: "Reply Added Successfully" })
             } catch (error) {
-
                 await this.sendResponse(res, 403, { message: "Reply Not Added", error: error })
             }
             next()
@@ -95,10 +100,6 @@ export default class ReplyController extends Controller {
     private async createReplyFromRequest(req: Request): Promise<Reply> {
         return this.replyRepository.create(req.body as Object)
     }
-    private async saveReplyToDatabase(reply: Reply): Promise<Reply> {
-        return await this.replyRepository.save(reply);
-    }
-
     private async deleteById(router: Router): Promise<void> {
         router.delete("/:idReply", async (req: Request, res: Response, next: NextFunction) => {
             try {

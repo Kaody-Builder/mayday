@@ -18,10 +18,7 @@ export class Diagnostic {
     @Column("float", { nullable: true,  name: "result_diag" })
     resultDiag: number;
 
-    @OneToMany(() => Intervention, (intervention) => intervention.idInte)
-    interventions: Intervention[];
-
-    @OneToMany(() => Reply, (reply) => reply.idRepl)
+    @OneToMany(() => Reply, (reply) => reply.idRepl, {nullable: true})
     reply: Reply[];
     
     @ManyToOne(() => User, (user) => user.idUser)
