@@ -8,7 +8,7 @@ import fs from "fs"
 import multer from 'multer'
 import path from "path"
 import { Central } from '../../entities/Central';
-import { Signalement } from "../../entities/Signalement";
+import { Signalement } from "../../entities/User";
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -48,8 +48,8 @@ export default class AttenteController extends Controller {
     }
 
     async addGet(router: Router): Promise<void> {
-        await this.getAllAttente(router)
-        await this.getSingleAttente(router)
+        // await this.getAllAttente(router)
+        // await this.getSingleAttente(router)
     }
 
 

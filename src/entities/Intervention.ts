@@ -8,7 +8,7 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { Equipe } from "./Equipe";
-import { Signalement } from "./Signalement";
+import { Signalement } from "./User";
 import { Rapport } from "./Rapport";
 
 @Index("Intervention_pkey", ["idInt"], { unique: true })

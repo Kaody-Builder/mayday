@@ -2,7 +2,7 @@ import { Router, Response, Request, NextFunction, ErrorRequestHandler } from "ex
 import { createConnection, DeleteResult, Repository, Connection, UpdateResult } from "typeorm";
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
-import { Signalement } from '../../entities/Signalement';
+import { Signalement } from '../../entities/User';
 import md5 from "crypto-js/md5"
 import fs from "fs"
 import multer from 'multer'

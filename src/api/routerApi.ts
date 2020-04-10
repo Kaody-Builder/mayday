@@ -9,6 +9,7 @@ import QuestionnaireController from './Controllers/QuestionnaireController';
 import PaysController from './Controllers/PaysController';
 import OptionController from './Controllers/OptionController';
 import AttenteController from './Controllers/AttenteController';
+import SymptomeController from './Controllers/SymptomeController';
 var router = express.Router()
 router.use("*", convertLatLong())
 
@@ -22,6 +23,7 @@ router.use("/questionnaires", new QuestionnaireController().mainRouter)
 router.use("/rapports", new RapportController().mainRouter)
 router.use("/reponses", new ReponseController().mainRouter)
 router.use("/signalements", new SignalementController().mainRouter)
+router.use("/symptomes", new SymptomeController().mainRouter)
 
 export default router;
 

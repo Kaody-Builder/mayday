@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Questionnaire } from "./Questionnaire";
-import { Signalement } from "./Signalement";
+import { Signalement } from "./User";
 
 @Index("Reponse_pkey", ["idRep"], { unique: true })
 @Entity("Reponse")
