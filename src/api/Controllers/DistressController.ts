@@ -80,17 +80,22 @@ export default class DistressController extends Controller {
 
     async postDistress(router: Router) {
         router.post("/",async (req: Request, res: Response, next: NextFunction) => {
+            var isOk = true
             try {
                 var distressToSave: Distress = await this.createDistressFromRequest(req)
                 distressToSave.codeDist = Math.floor(Math.random() * (9999 - 1000) + 1000).toString()
                 distressToSave.levelDist = 0
+                if(distressToSave.idUser == undefined || distressToSave.idUser == null)
+                    throw "idUser not Provided";
+                    
                 var distressSaved: Distress = await this.saveDistressToDatabase(distressToSave)
-                Utils.sendEmail(distressToSave.idUser.mailUser,distressToSave.codeDist)
                 await this.sendResponse(res, 201, { message: "Distress Added Successfully"})
             } catch (error) {
-
+                isOk = false
                 await this.sendResponse(res, 403, { message: "Distress Not Added", error: error })
             }
+            if(isOk)
+                Utils.sendEmail(distressSaved.idUser.mailUser,distressToSave.codeDist)
             next()
         })
     }

@@ -44,6 +44,7 @@ export default class ConfirmationController extends Controller {
                 var lol = await getConnection().createEntityManager()
                 .query(`SELECT ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(u.coordDist)}'), ST_SRID("Central".coord_cent))) FROM public."Central" ORDER BY  ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(req.body.coordUser)}'), ST_SRID("Central".coord_cent))) ASC`)
                 // SEND to Central lol[0] u.idDist
+                console.log(lol[0])
                 await this.distressRepository.save(u)
                 await this.sendResponse(res, 200, { message: "Account confirmed" })
             } catch (error) {
