@@ -34,7 +34,7 @@ export default class Utils {
                 </button>
             </a>
             <p style="font-size: small; margin-top: 35px;">If the button don't work enter this code : <b
-                style="font-size: medium;">123456</b></p>
+                style="font-size: medium;">${code}</b></p>
         </div>
     </div>
             `

@@ -95,7 +95,7 @@ export default class DistressController extends Controller {
                 await this.sendResponse(res, 403, { message: "Distress Not Added", error: error })
             }
             if(isOk)
-                Utils.sendEmail(distressSaved.idUser.mailUser,distressToSave.codeDist)
+                Utils.sendEmail(distressSaved.idUser.mailUser,distressSaved.codeDist)
             next()
         })
     }

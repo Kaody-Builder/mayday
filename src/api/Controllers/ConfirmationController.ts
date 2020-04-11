@@ -35,7 +35,7 @@ export default class ConfirmationController extends Controller {
     async addPut(router: Router): Promise<void> {
     }
     async postConfirmation(router: Router) {
-        router.post("/:email/:code", async (req: Request, res: Response, next: NextFunction) => {
+        router.get("/:email/:code", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var u = await this.distressRepository.findOneOrFail({where: {emailUser: req.params.email}})
                 if(u.codeDist != req.params.code)
