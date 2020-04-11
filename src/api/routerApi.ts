@@ -10,6 +10,7 @@ import OptionController from './Controllers/OptionController';
 import SymptomController from './Controllers/SymptomController';
 import ConfirmationController from './Controllers/ConfirmationController';
 import DirectionController from './Controllers/DirectionController';
+import UserController from './Controllers/UserController';
 var router = express.Router()
 router.use("*", convertLatLong())
 
@@ -24,6 +25,7 @@ router.use("/distresss", new DistressController().mainRouter)
 router.use("/symptoms", new SymptomController().mainRouter)
 router.use("/confirmations", new ConfirmationController().mainRouter)
 router.use("/directions", new DirectionController().mainRouter)
+router.use("/users", new UserController().mainRouter)
 
 export default router;
 

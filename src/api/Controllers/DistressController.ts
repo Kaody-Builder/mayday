@@ -83,6 +83,7 @@ export default class DistressController extends Controller {
             try {
                 var distressToSave: Distress = await this.createDistressFromRequest(req)
                 distressToSave.codeDist = Math.floor(Math.random() * (9999999 - 100000) + 100000).toString()
+                distressToSave.levelDist = 0
                 var distressSaved: Distress = await this.saveDistressToDatabase(distressToSave)
                 Utils.sendEmail(distressToSave.idUser.mailUser,distressToSave.codeDist)
                 await this.sendResponse(res, 201, { message: "Distress Added Successfully"})

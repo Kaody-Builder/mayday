@@ -119,17 +119,7 @@ export default class CentralController extends Controller {
         router.post("/nearest", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var lol = await getConnection().createEntityManager()
-                .query(`SELECT * FROM public."Central" ORDER BY  ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('{"type":"Point","coordinates":[12,12]}'), ST_SRID("Central".coord_cent))) ASC`)
-                    // .createQueryBuilder(Central, "central")
-                    // .orderBy({
-                    //     "ST_Distance(central.coord_cent, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(central.coord_cent)))": {
-                    //         order: "ASC"
-                    //     }
-                    // })
-                    // .setParameters({
-                    //     origin: JSON.stringify(req.body.coordUser)
-                    // })
-                    // .getMany();
+                .query(`SELECT ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(req.body.coordUser)}'), ST_SRID("Central".coord_cent))) FROM public."Central" ORDER BY  ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(req.body.coordUser)}'), ST_SRID("Central".coord_cent))) ASC`)
                 await this.sendResponse(res, 201, { message: lol[0] })
             } catch (error) {
 

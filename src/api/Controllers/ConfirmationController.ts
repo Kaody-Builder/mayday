@@ -4,6 +4,7 @@ import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import { Distress } from '../../entities/Distress';
 import Utils from "../SendEmail"
+import { Central } from '../../entities/Central';
 export default class ConfirmationController extends Controller {
 
     distressRepository : Repository<Distress>
@@ -39,6 +40,11 @@ export default class ConfirmationController extends Controller {
                 var u = await this.distressRepository.findOneOrFail({where: {emailUser: req.params.email}})
                 if(u.codeDist != req.params.code)
                     throw new Error("Code fail")
+                u.levelDist = 1
+                var lol = await getConnection().createEntityManager()
+                .query(`SELECT ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(u.coordDist)}'), ST_SRID("Central".coord_cent))) FROM public."Central" ORDER BY  ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(req.body.coordUser)}'), ST_SRID("Central".coord_cent))) ASC`)
+                // SEND to Central lol[0] u.idDist
+                await this.distressRepository.save(u)
                 await this.sendResponse(res, 200, { message: "Account confirmed" })
             } catch (error) {
                 await this.sendResponse(res, 401, { message: "Code error", error: error })

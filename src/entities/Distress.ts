@@ -23,9 +23,6 @@ export class Distress {
     @Column("timestamptz", { nullable: true, name: "date_dist" })
     dateDist: string;
 
-    @Column("character varying", { nullable: true, name: "photo_dist" })
-    photoDist: string;
-
     @Column("bit", { nullable: true,  name: "level_dist" })
     levelDist: number;
 
