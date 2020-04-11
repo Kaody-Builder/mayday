@@ -7,7 +7,7 @@ import ReplyController from './Controllers/ReplyController';
 import ReportController from './Controllers/ReportController';
 import QuestionController from './Controllers/QuestionController';
 import OptionController from './Controllers/OptionController';
-import SymptomeController from './Controllers/SymptomeController';
+import SymptomController from './Controllers/SymptomController';
 import ConfirmationController from './Controllers/ConfirmationController';
 import DirectionController from './Controllers/DirectionController';
 var router = express.Router()
@@ -21,7 +21,7 @@ router.use("/questions", new QuestionController().mainRouter)
 router.use("/reports", new ReportController().mainRouter)
 router.use("/replys", new ReplyController().mainRouter)
 router.use("/distresss", new DistressController().mainRouter)
-router.use("/symptomes", new SymptomeController().mainRouter)
+router.use("/symptoms", new SymptomController().mainRouter)
 router.use("/confirmations", new ConfirmationController().mainRouter)
 router.use("/directions", new DirectionController().mainRouter)
 

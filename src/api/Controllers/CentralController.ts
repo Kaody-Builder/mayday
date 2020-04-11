@@ -1,5 +1,5 @@
 import { Router, Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import { createConnection, DeleteResult, Repository, Connection, UpdateResult } from "typeorm";
+import { createConnection, DeleteResult, Repository, Connection, UpdateResult, getConnection } from "typeorm";
 import { ormconfig } from "../../config";
 import { Controller } from "../Controller";
 import router from '../routerApi';
@@ -19,8 +19,8 @@ export default class CentralController extends Controller {
     }
     async createConnectionAndAssignRepository(): Promise<void> {
         try {
-             var connection: Connection = await createConnection(ormconfig)
-             this.centralRepository = connection.getRepository(Central)
+            var connection: Connection = await createConnection(ormconfig)
+            this.centralRepository = connection.getRepository(Central)
         } catch (error) {
             console.log(error)
         }
@@ -116,6 +116,27 @@ export default class CentralController extends Controller {
     }
 
     async postCentral(router: Router) {
+        router.post("/nearest", async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                var lol = await getConnection().createEntityManager()
+                .query(`SELECT * FROM public."Central" ORDER BY  ST_Distance("Central".coord_cent, ST_SetSRID(ST_GeomFromGeoJSON('{"type":"Point","coordinates":[12,12]}'), ST_SRID("Central".coord_cent))) ASC`)
+                    // .createQueryBuilder(Central, "central")
+                    // .orderBy({
+                    //     "ST_Distance(central.coord_cent, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(central.coord_cent)))": {
+                    //         order: "ASC"
+                    //     }
+                    // })
+                    // .setParameters({
+                    //     origin: JSON.stringify(req.body.coordUser)
+                    // })
+                    // .getMany();
+                await this.sendResponse(res, 201, { message: lol[0] })
+            } catch (error) {
+
+                await this.sendResponse(res, 403, { message: "Central Not Added", error: error })
+            }
+            next()
+        })
         router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var centralToSave: Central = await this.createCentralFromRequest(req)
@@ -140,7 +161,7 @@ export default class CentralController extends Controller {
             try {
                 var central: Central = await this.centralRepository.findOne(req.params.idCentral)
                 await this.centralRepository.remove(central)
-                await this.sendResponse(res, 200, { message: "Central delete succesfully"});
+                await this.sendResponse(res, 200, { message: "Central delete succesfully" });
             }
             catch (error) {
                 await this.sendResponse(res, 403, { message: "Central Not deleted", error: error });
