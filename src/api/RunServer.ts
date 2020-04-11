@@ -26,7 +26,7 @@ export default () => {
     app.use(bodyParser.json())
     app.use("/api", compression())
     app.use(express.static(__dirname.replace("/src/api", "") + '/dist/covida'))
-    app.get("/", async (req: Request, res: Response, next: NextFunction) => {
+    app.get("/*", async (req: Request, res: Response, next: NextFunction) => {
         res.sendFile(path.join(__dirname.replace("/src/api", "") +'/dist/covida/index.html'));
     })
     app.use("/api", router)
