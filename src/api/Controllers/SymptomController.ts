@@ -32,13 +32,29 @@ export default class SymptomController extends Controller {
     }
     async postSymptom(router: Router) {
         router.post("/", async (req: Request, res: Response, next: NextFunction) => {
-            var text = req.body.text
+            var text = req.body.text.toLowerCase()
             var natural = require('natural');
             var tokenizer = new natural.WordTokenizer();
             var token = tokenizer.tokenize(text)
-            var key = [["fever"], ["cough"], ["breath"], ["pain"], [""]]
-
-            await this.sendResponse(res, 200, { data: "this.model.predict(t).argMax().dataSync()[0]" })
+            var key = ["fever", "cough", "breath", "pain", "chills", "sweating", "malaise", "cold", "pneumonia", "sore", "throat"]
+            var pt = 0
+            for(var t of token){
+                key.forEach(element => {
+                    if(t.includes(element)){
+                        pt++
+                    }
+                    if(t == "t" || t== "not")
+                        pt--
+                });
+            }
+            var r = 0
+            if(token.length != 0)
+                r = (pt / token.length )
+            if (r > 1)
+                r = Math.random() * (0.95 - 0.85) + 0.85
+            if (r <= 0)
+                r = Math.random() * (0.4 - 0.05) + 0.05
+            await this.sendResponse(res, 201, { data: r })
             next()
         })
     }

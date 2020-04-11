@@ -25,10 +25,10 @@ export default () => {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json())
     app.use("/api", compression())
-    app.use(express.static(__dirname.replace("/src/api", "") + '/angular/dist/covida'))
-    // app.get("/", async (req: Request, res: Response, next: NextFunction) => {
-    //     res.sendFile(path.join(__dirname.replace("/src/api", "") +'/dist/covida/index.html'));
-    // })
+    app.use(express.static(__dirname.replace("/src/api", "") + '/dist/covida'))
+    app.get("/", async (req: Request, res: Response, next: NextFunction) => {
+        res.sendFile(path.join(__dirname.replace("/src/api", "") +'/dist/covida/index.html'));
+    })
     app.use("/api", router)
     io.sockets.on('connection', function (socket) {
         socket.on('broadcast', function (message) {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 640 480" style="enable-background:new 0 0 640 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#EBEBEC;}
+	.st1{fill:#0B8772;}
+	.st2{fill:#4D4D4D;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#666666;}
+	.st5{fill:#0AB099;}
+	.st6{font-family:'ProductSans-Bold';}
+	.st7{font-size:20px;}
+</style>
+<circle id="XMLID_93_" class="st0" cx="323.2" cy="250" r="203.2"/>
+<circle id="XMLID_87_" class="st1" cx="333.7" cy="232.2" r="203.2"/>
+<g id="XMLID_1_">
+	<g id="XMLID_2_">
+		<path id="XMLID_4_" class="st2" d="M373.7,384.1h-85.6c-13.3,0-24-10.7-24-24V136.3c0-13.3,10.7-24,24-24h85.6
+			c13.3,0,24,10.7,24,24v223.8C397.7,373.4,386.9,384.1,373.7,384.1z"/>
+		<path id="XMLID_5_" class="st3" d="M394,366c0,7.7-6.3,14-14,14h-98c-7.7,0-14-6.3-14-14V130c0-7.7,6.3-14,14-14h98
+			c7.7,0,14,6.3,14,14V366z"/>
+	</g>
+	<g id="XMLID_25_">
+		<g id="XMLID_23_">
+			<path id="XMLID_8_" class="st2" d="M357.1,128.2h-52c-5.7,0-10.2-3.6-10.2-9.2v-2.7h72.5v1.7
+				C367.4,123.6,362.8,128.2,357.1,128.2z"/>
+			<g id="XMLID_9_">
+				<path id="XMLID_10_" class="st4" d="M347.9,121.8h-33.9c-0.8,0-1.4-0.6-1.4-1.4l0,0c0-0.8,0.6-1.4,1.4-1.4h33.9
+					c0.8,0,1.4,0.6,1.4,1.4l0,0C349.3,121.2,348.7,121.8,347.9,121.8z"/>
+				<path id="XMLID_11_" class="st4" d="M353.7,122.2L353.7,122.2c-0.9,0-1.6-0.7-1.6-1.6l0,0c0-0.9,0.7-1.6,1.6-1.6h0
+					c0.9,0,1.6,0.7,1.6,1.6l0,0C355.3,121.5,354.6,122.2,353.7,122.2z"/>
+			</g>
+		</g>
+		<path id="XMLID_7_" class="st2" d="M354.9,376.7h-47.6c-0.5,0-0.9-0.4-0.9-0.9l0,0c0-0.5,0.4-0.9,0.9-0.9h47.6
+			c0.5,0,0.9,0.4,0.9,0.9l0,0C355.7,376.3,355.4,376.7,354.9,376.7z"/>
+	</g>
+</g>
+<path id="XMLID_3_" class="st5" d="M388.8,269.5h-116c-15.3,0-27.7-12.4-27.7-27.7v0c0-15.3,12.4-27.7,27.7-27.7h116
+	c15.3,0,27.7,12.4,27.7,27.7v0C416.5,257.1,404.1,269.5,388.8,269.5z"/>
+<text id="XMLID_6_" transform="matrix(1 0 0 1 253 250)" class="st3 st6 st7">#SOS*MayDay#</text>
+</svg>
