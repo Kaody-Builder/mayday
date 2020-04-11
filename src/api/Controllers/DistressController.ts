@@ -82,7 +82,7 @@ export default class DistressController extends Controller {
         router.post("/",async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var distressToSave: Distress = await this.createDistressFromRequest(req)
-                distressToSave.codeDist = Math.floor(Math.random() * (9999999 - 100000) + 100000).toString()
+                distressToSave.codeDist = Math.floor(Math.random() * (9999 - 1000) + 1000).toString()
                 distressToSave.levelDist = 0
                 var distressSaved: Distress = await this.saveDistressToDatabase(distressToSave)
                 Utils.sendEmail(distressToSave.idUser.mailUser,distressToSave.codeDist)

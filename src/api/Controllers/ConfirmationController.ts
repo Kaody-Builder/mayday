@@ -64,7 +64,7 @@ export default class ConfirmationController extends Controller {
         router.post("/:email/refresh", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 var u = await this.distressRepository.findOneOrFail({where: {emailUser: req.params.email}})
-                u.codeDist = Math.floor(Math.random() * (9999999 - 100000) + 100000).toString()
+                u.codeDist = Math.floor(Math.random() * (9999 - 1000) + 1000).toString()
                 await this.distressRepository.save(u)
                 Utils.sendEmail(req.params.email, u.codeDist)
                 await this.sendResponse(res, 201, { message: "Confirmation Successfully" })
